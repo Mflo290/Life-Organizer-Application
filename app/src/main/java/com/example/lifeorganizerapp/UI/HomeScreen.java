@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ public class HomeScreen extends AppCompatActivity {
         DrawerLayout drawerLayout;
         ImageView hamIcon;
         LinearLayout homeButton, searchButton, reportsButton, logoutButton;
+        Button toDoButton, billsButton, goalsButton;
 
 
 
@@ -40,39 +42,50 @@ public class HomeScreen extends AppCompatActivity {
         searchButton = findViewById(R.id.search_button);
         reportsButton = findViewById(R.id.reports_button);
         logoutButton = findViewById(R.id.logout_button);
+        toDoButton = findViewById(R.id.todo_button);
+        billsButton = findViewById(R.id.bills_button);
+        goalsButton = findViewById(R.id.goals_button);
 
 
-        //Set click listener for the hamburger menu
+        //Click on the logout button in the menu
+            toDoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(HomeScreen.this, ToDoLists.class);
+                    startActivity(intent);
+                }
+            });
+
+
+        //Click on the hamburger menu
         hamIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openDrawer(drawerLayout);
             }
         });
-
-
-        //Set click listener for home button in the menu
+        //Click on the home button in the menu
             homeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(HomeScreen.this, "Home Button", Toast.LENGTH_SHORT).show();
+                  closeDrawer(drawerLayout);
                 }
         });
-            //Set click listener for the search button in the menu
+            //Click search button in the menu
             searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(HomeScreen.this,"Search Button", Toast.LENGTH_SHORT).show();
                 }
             });
-            //Set click listener for the reports button in the menu
+            //Click reports button in the menu
             reportsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(HomeScreen.this,"Reports Button", Toast.LENGTH_SHORT).show();
                 }
             });
-            //Set click listener for the logout button in the menu
+            //Click logout button in the menu
             logoutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -100,7 +113,7 @@ public class HomeScreen extends AppCompatActivity {
             }
         }
 
-        //This method is used to redirect to the selected menu screen
+        //Method to redirect to selected menu button's activity
         public static void redirectActivity(Activity activity, Class secondActivity) {
             Intent intent = new Intent(activity, secondActivity);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

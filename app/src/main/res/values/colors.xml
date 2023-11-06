@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="purple">#300181</color>
+    <color name="green">#006004</color>
+    <color name="dark_purple">#190043</color>
+
+    <color name="colorPrimary">@android:color/holo_green_dark</color>
+    <color name="colorPrimaryDark">@android:color/holo_green_dark</color>
+    <color name="colorAccent">@android:color/white</color>
+
+
 </resources>

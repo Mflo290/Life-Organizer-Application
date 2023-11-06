@@ -13,10 +13,15 @@
         android:theme="@style/Theme.LifeOrganizerApp"
         tools:targetApi="31">
         <activity
+            android:name=".UI.ToDoLists"
+            android:exported="false"
+            android:label="Lists"
+            android:parentActivityName=".UI.HomeScreen"/>
+        <activity
             android:name=".UI.HomeScreen"
             android:exported="false"
             android:label="Home Screen"
-            android:parentActivityName=".UI.MainActivity"/>
+            android:parentActivityName=".UI.MainActivity" />
         <activity
             android:name=".UI.MainActivity"
             android:exported="true"
@@ -27,6 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>
