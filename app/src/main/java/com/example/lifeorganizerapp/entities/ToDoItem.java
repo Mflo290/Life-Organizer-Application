@@ -1,32 +1,39 @@
 package com.example.lifeorganizerapp.entities;
 
-public class ToDoItem {
+import androidx.room.Entity;
 
-    int todoID;
-    int status;
-    String title;
+import java.time.LocalDate;
 
-    public int getTodoID() {
-        return todoID;
+@Entity(tableName = "To_Do_Items")
+public class ToDoItem extends Item{
+
+    private LocalDate dateCompleted;
+    private boolean checked;
+
+
+
+    public ToDoItem(int ID, String title) {
+        super(ID, title);
     }
 
-    public void setTodoID(int id) {
-        this.todoID = id;
+
+
+    public LocalDate getDateCompleted() {
+        return dateCompleted;
     }
 
-    public int getStatus() {
-        return status;
+    public void setDateCompleted(LocalDate dateCompleted) {
+        this.dateCompleted = dateCompleted;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public boolean isChecked() {
+        return checked;
     }
 
-    public String getTitle() {
-        return title;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+
+
 }

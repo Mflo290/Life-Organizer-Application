@@ -14,6 +14,10 @@ public class ToDoList {
         this.listName = listName;
     }
 
+    public ToDoList() {
+
+    }
+
     public int getListID() {
         return listID;
     }

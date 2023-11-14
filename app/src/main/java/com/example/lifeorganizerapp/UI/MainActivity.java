@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.database.Repository;
-import com.example.lifeorganizerapp.entities.ToDoList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,14 +18,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        //Test Objects
-//        repository = new Repository(getApplication());
-//
-//        ToDoList testList4 = new ToDoList(4, "Stuff");
-//
-//        repository.insert(testList4);
-
 
         //Initialize Variables
         Button loginButton = findViewById(R.id.loginButton);

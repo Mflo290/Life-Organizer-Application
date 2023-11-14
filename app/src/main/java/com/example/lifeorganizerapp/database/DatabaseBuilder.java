@@ -11,13 +11,12 @@ import com.example.lifeorganizerapp.entities.ToDoList;
 
 @Database(entities = {ToDoList.class}, version = 1, exportSchema = false)
 public abstract class DatabaseBuilder extends RoomDatabase {
-    public abstract ListDAO listDAO();     //Vacation Interface - CRUD
+    public abstract ListDAO listDAO();     //List Interface - CRUD
 
     private static volatile DatabaseBuilder INSTANCE;     //Database Instance
 
-
-    //getDatabase. This is where you choose between a synchronous or asynchronous database
-    static DatabaseBuilder getVacationDatabase(final Context context) {
+    //This is where you choose between a synchronous or asynchronous database
+    static DatabaseBuilder getDatabase(final Context context) {
         if(INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), DatabaseBuilder.class,"MyDatabase.db") //<-- Name of database
                     .fallbackToDestructiveMigration()
