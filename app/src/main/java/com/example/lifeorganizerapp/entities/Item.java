@@ -1,7 +1,12 @@
 package com.example.lifeorganizerapp.entities;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public abstract class Item {
 
+    @PrimaryKey
     private int ID;
     private String title;
 

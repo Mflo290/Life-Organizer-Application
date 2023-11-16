@@ -20,13 +20,17 @@ import java.util.List;
 
 public class ToDoLists extends AppCompatActivity implements DialogCloseListener {
 
+
+
     //Declare variables
     TextView headingTextView;
     ImageView backArrow;
     FloatingActionButton fab;
 
+
     Repository repository;
     private ToDoListAdapter toDoListAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,9 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
         List<ToDoList> allToDoLists = repository.getAllToDoLists();
         toDoListAdapter.setToDoLists(allToDoLists);
 
-//        ItemTouchHelper itemTouchHelper =new ItemTouchHelper(new ListItemTouchHelper(toDoListAdapter));
+//        ItemTouchHelper itemTouchHelper =
+//
+//        new ItemTouchHelper(new TouchHelper(toDoListAdapter));
 //        itemTouchHelper.attachToRecyclerView(recyclerView);
 
 

@@ -4,7 +4,9 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.lifeorganizerapp.dao.ItemDAO;
 import com.example.lifeorganizerapp.dao.ListDAO;
+import com.example.lifeorganizerapp.entities.ToDoItem;
 import com.example.lifeorganizerapp.entities.ToDoList;
 
 import java.util.List;
@@ -14,8 +16,11 @@ import java.util.concurrent.Executors;
 public class Repository {
 
     private ListDAO listDAO;
+    private ItemDAO itemDAO;
     private List<ToDoList> allToDoLists;
+    private List<ToDoItem> allToDoItems;
     private static int NUMBER_OF_THREADS = 4;
+    private LiveData<ToDoList> selectedList;
     static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public Repository(Application application) {

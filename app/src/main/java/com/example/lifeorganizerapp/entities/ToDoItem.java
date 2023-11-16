@@ -5,15 +5,18 @@ import androidx.room.Entity;
 import java.time.LocalDate;
 
 @Entity(tableName = "To_Do_Items")
-public class ToDoItem extends Item{
+public class ToDoItem extends Item {
 
     private LocalDate dateCompleted;
     private boolean checked;
+    private int listID;
 
 
 
-    public ToDoItem(int ID, String title) {
+    public ToDoItem(int ID, String title, boolean checked, int listID) {
         super(ID, title);
+        this.checked = checked;
+        this.listID = listID;
     }
 
 
@@ -34,6 +37,13 @@ public class ToDoItem extends Item{
         this.checked = checked;
     }
 
+    public int getListID() {
+        return listID;
+    }
+
+    public void setListID(int listID) {
+        this.listID = listID;
+    }
 
 
 }
