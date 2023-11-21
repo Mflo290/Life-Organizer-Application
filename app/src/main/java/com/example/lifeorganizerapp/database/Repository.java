@@ -26,12 +26,16 @@ public class Repository {
     public Repository(Application application) {
         DatabaseBuilder db = DatabaseBuilder.getDatabase(application);
         listDAO = db.listDAO();
+        itemDAO = db.itemDAO();
     }
 
     public LiveData<ToDoList> getToDoListById(int toDoListID) {
         return listDAO.getToDoListById(toDoListID);
     }
 
+    public LiveData<ToDoItem> getToDoItemByID(int toDoItemID) {
+        return itemDAO.getItemByID(toDoItemID);
+    }
 
     public List<ToDoList> getAllToDoLists() {
         databaseExecutor.execute(() ->{
@@ -45,6 +49,21 @@ public class Repository {
         return allToDoLists;
     }
 
+    public LiveData<List<ToDoItem>> getAssociatedItems(int listID){
+        return itemDAO.getAssociatedItems(listID);
+    }
+
+    public List<ToDoItem> getAllToDoItems() {
+        databaseExecutor.execute(()->{
+            allToDoItems = itemDAO.getAllToDoItems();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return allToDoItems;
+    }
 
 
 
@@ -87,5 +106,39 @@ public class Repository {
 
 
 
+    public void insert(ToDoItem toDoItem) {
+        databaseExecutor.execute(()->{
+            itemDAO.insert(toDoItem);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void update(ToDoItem toDoItem) {
+        databaseExecutor.execute(()->{
+            itemDAO.update(toDoItem);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void delete(ToDoItem toDoItem) {
+        databaseExecutor.execute(()->{
+            itemDAO.delete(toDoItem);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

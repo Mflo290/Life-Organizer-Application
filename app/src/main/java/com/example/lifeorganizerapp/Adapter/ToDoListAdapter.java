@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.UI.AddNewItem;
+import com.example.lifeorganizerapp.UI.ToDoActivity;
 import com.example.lifeorganizerapp.database.Repository;
 import com.example.lifeorganizerapp.entities.ToDoList;
 
@@ -53,8 +54,10 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     final ToDoList currentToDoList = mToDoList.get(position);
-                    Intent intent = new Intent(context, ToDoList.class);
+                    Intent intent = new Intent(context, ToDoActivity.class);
+                    intent.putExtra("isListClicked", true);
                     intent.putExtra("toDoListID", currentToDoList.getListID());
+                    intent.putExtra("toDoListName", currentToDoList.getListName());
 
                     context.startActivity(intent);
                 }
@@ -69,6 +72,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
 
     @NonNull
     @Override
+
     public ToDoListAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.list_item, parent, false);
         return new ListViewHolder(itemView);
@@ -124,9 +128,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
 
 
 
-//    public static class ViewHolder extends RecyclerView.ViewHolder {
-//        CheckBox checkBox;
-//    }
+
 
 
 

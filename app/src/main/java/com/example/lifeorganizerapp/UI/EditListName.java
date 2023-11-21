@@ -22,15 +22,12 @@ import com.example.lifeorganizerapp.database.Repository;
 import com.example.lifeorganizerapp.entities.ToDoList;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class AddNewItem  extends BottomSheetDialogFragment {
+public class EditListName extends BottomSheetDialogFragment {
 
-    //Declare Variables
     public static final String TAG = "ActionBottomDialog";
-    private EditText newItemText;
-    private Button newItemSaveButton;
+    private EditText currentTitle;
+    private Button saveNewTitleButton;
     Repository repository;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,14 +35,9 @@ public class AddNewItem  extends BottomSheetDialogFragment {
         setStyle(STYLE_NORMAL, R.style.DialogStyle);
     }
 
-
-    public AddNewItem(Repository repository) {
+    public EditListName(Repository repository) {
         this.repository = repository;
     }
-
-//    public static AddNewItem newInstance() {
-//        return new AddNewItem();
-//    }
 
     @Override
     public void onDismiss (DialogInterface dialog){
@@ -55,7 +47,6 @@ public class AddNewItem  extends BottomSheetDialogFragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_dialog, container, false);
@@ -64,17 +55,12 @@ public class AddNewItem  extends BottomSheetDialogFragment {
     }
 
 
-
-
-
-
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        newItemText = getView().findViewById(R.id.item_edittext);
-        newItemSaveButton = getView().findViewById(R.id.save_button);
+        currentTitle = getView().findViewById(R.id.item_edittext);
+        saveNewTitleButton = getView().findViewById(R.id.save_button);
 
         boolean isUpdate = false;   //This checks if there will be a new item or an edit
 
@@ -83,12 +69,13 @@ public class AddNewItem  extends BottomSheetDialogFragment {
         if (bundle != null) {     //If the bundle is not empty, then the existing listName will be passed onto the fragment
             isUpdate = true;
             String listName = bundle.getString("list_name");
-            newItemText.setText(listName);
+
+            currentTitle.setText(listName);
             if (listName.length() > 0) {        //If there is text, the save button color will change
-                newItemSaveButton.setTextColor(ContextCompat.getColor(getContext(), R.color.purple));
+                saveNewTitleButton.setTextColor(ContextCompat.getColor(getContext(), R.color.purple));
             }
         }
-        newItemText.addTextChangedListener(new TextWatcher() {
+        currentTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -97,11 +84,11 @@ public class AddNewItem  extends BottomSheetDialogFragment {
             @Override
             public void onTextChanged(CharSequence sequence, int i, int i1, int i2) {
                 if (sequence.toString().equals("")) {
-                    newItemSaveButton.setEnabled(false);
-                    newItemSaveButton.setTextColor(Color.GRAY);
+                    saveNewTitleButton.setEnabled(false);
+                    saveNewTitleButton.setTextColor(Color.GRAY);
                 } else {
-                    newItemSaveButton.setEnabled(true);
-                    newItemSaveButton.setTextColor(ContextCompat.getColor(getContext(), R.color.purple));
+                    saveNewTitleButton.setEnabled(true);
+                    saveNewTitleButton.setTextColor(ContextCompat.getColor(getContext(), R.color.purple));
                 }
             }
             @Override
@@ -110,10 +97,10 @@ public class AddNewItem  extends BottomSheetDialogFragment {
         });
 
         final boolean finalIsUpdate = isUpdate;
-        newItemSaveButton.setOnClickListener(new View.OnClickListener() {
+        saveNewTitleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newItemName = newItemText.getText().toString();
+                String newItemName = currentTitle.getText().toString();
 
                 if (finalIsUpdate) {
                     int toDoListID = bundle.getInt("todo_list_id");
@@ -139,6 +126,13 @@ public class AddNewItem  extends BottomSheetDialogFragment {
 
 
     }
+
+
+
+
+
+
+
+
+
 }
-
-
