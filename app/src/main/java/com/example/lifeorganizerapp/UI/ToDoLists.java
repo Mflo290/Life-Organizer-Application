@@ -1,11 +1,14 @@
 package com.example.lifeorganizerapp.UI;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +33,15 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
 
     Repository repository;
     private ToDoListAdapter toDoListAdapter;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh the list here
+        List<ToDoList> currentLists = repository.getAllToDoLists();
+        toDoListAdapter.setToDoLists(currentLists);
+        toDoListAdapter.notifyDataSetChanged();
+    }
 
 
     @Override

@@ -1,7 +1,10 @@
 package com.example.lifeorganizerapp.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,10 +14,9 @@ import android.widget.TextView;
 
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.database.Repository;
+import com.example.lifeorganizerapp.entities.ToDoList;
 
-import org.w3c.dom.Text;
-
-public class ToDoActivity extends AppCompatActivity {
+public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnListUpdateListener{
 
     //Declare variables
 
@@ -26,6 +28,16 @@ public class ToDoActivity extends AppCompatActivity {
 
     Repository repository;
 
+
+
+    @Override
+    public void onListUpdated(ToDoList updatedList) {
+        // Update the toolbar heading here with the new title
+        heading.setText(updatedList.getListName());
+
+        // Update the repository with the new list
+        repository.update(updatedList);
+    }
 
 
     @Override
@@ -55,6 +67,10 @@ public class ToDoActivity extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("isBackButtonClicked", true);
+                intent.putExtra("list_name", listName); // Pass the updated list name
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -71,13 +87,28 @@ public class ToDoActivity extends AppCompatActivity {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        Repository repository = new Repository(getApplication());
                         if (menuItem.getItemId() == R.id.edit_list) {
-                            AddNewItem bottomFragment = new AddNewItem(repository);
-                            bottomFragment.show(getSupportFragmentManager(), AddNewItem.TAG);
+                            int currentID = getIntent().getIntExtra("toDoListID", -1);
+                            LiveData<ToDoList> updatedNameLiveData = repository.getToDoListById(currentID);
+                            updatedNameLiveData.observe(ToDoActivity.this, new Observer<ToDoList>() {
+                                @Override
+                                public void onChanged(ToDoList toDoList) {
+                                    String title = toDoList.getListName();
+                                    AddNewItem bottomFragment = new AddNewItem(repository);
+                                    bottomFragment.setOnListUpdateListener(ToDoActivity.this); // Set the listener using ToDoActivity.this
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt("todo_list_id", toDoList.getListID());
+                                    bundle.putString("list_name", title);
+                                    bottomFragment.setArguments(bundle);
+                                    bottomFragment.show(getSupportFragmentManager(), AddNewItem.TAG);
+
+                                    // Remove the observer once the dialog is shown
+                                    updatedNameLiveData.removeObserver(this);
+                                }
+
+                            });
                         } else if (menuItem.getItemId() == R.id.delete_list) {
-
-
+                            // Handle delete list
                         }
                         return true;
                     }
@@ -85,6 +116,11 @@ public class ToDoActivity extends AppCompatActivity {
                 popupMenu.show();
             }
         });
+
+                    }
+
+
+
 
 
 
@@ -97,4 +133,3 @@ public class ToDoActivity extends AppCompatActivity {
 
 
 
-}
