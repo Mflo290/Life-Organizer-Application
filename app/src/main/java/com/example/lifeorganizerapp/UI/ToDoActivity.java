@@ -3,18 +3,27 @@ package com.example.lifeorganizerapp.UI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.example.lifeorganizerapp.Adapter.ToDoItemAdapter;
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.database.Repository;
+import com.example.lifeorganizerapp.entities.ToDoItem;
 import com.example.lifeorganizerapp.entities.ToDoList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnListUpdateListener{
 
@@ -27,6 +36,8 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
     ImageView editIcon;
 
     Repository repository;
+    FloatingActionButton fab;
+    private ToDoItemAdapter toDoItemAdapter;
 
 
 
@@ -45,14 +56,21 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
 
-        //Initialize Variables
         repository = new Repository(getApplication());
+
+        //RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.tasks_recyclerview);
+        toDoItemAdapter = new ToDoItemAdapter(this, repository);
+        recyclerView.setAdapter(toDoItemAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<ToDoItem> allTaskItems = repository.getAllToDoItems();
+        toDoItemAdapter.setToDoItems(allTaskItems);
 
         //Find Views By ID
         heading = findViewById(R.id.heading_textview);
         backArrow = findViewById(R.id.back_arrow);
         editIcon = findViewById(R.id.edit_icon);
-
+        fab = findViewById(R.id.floating_add_button);
 
         //Get Intents from previous screen and repo
         toDoListID = getIntent().getIntExtra("toDoListID", -1);
@@ -60,6 +78,32 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
         //Set data
         heading.setText(listName);
+
+
+
+        //Set FAB visibility when keyboard is out
+        // Get the root layout of your activity
+        final View activityRootView = findViewById(R.id.constraint_layout); // Replace with your actual root layout ID
+        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                activityRootView.getWindowVisibleDisplayFrame(r);
+                int screenHeight = activityRootView.getRootView().getHeight();
+
+                // Calculate the height difference between the screen height and visible window height
+                int heightDifference = screenHeight - (r.bottom - r.top);
+
+                // If the height difference is more than a threshold (e.g., 200dp), the keyboard is probably visible
+                if (heightDifference > screenHeight * 0.15) {
+                    // Hide your FloatingActionButton
+                    fab.setVisibility(View.GONE);
+                } else {
+                    // Show your FloatingActionButton
+                    fab.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
 
 
@@ -74,7 +118,6 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
                 finish();
             }
         });
-
 
 
         editIcon.setOnClickListener(new View.OnClickListener() {
@@ -117,16 +160,29 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
             }
         });
 
-                    }
 
-
-
-
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Repository repository = new Repository(getApplication());
+////                AddNewItem bottomFragment = new AddNewItem(repository);
+////                bottomFragment.show(getSupportFragmentManager(), AddNewItem.TAG);
+//            }
+//        });
 
 
 
 
     }
+
+
+
+
+
+
+
+
+}
 
 
 

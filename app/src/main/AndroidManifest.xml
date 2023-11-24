@@ -16,7 +16,8 @@
             android:name=".UI.ToDoActivity"
             android:exported="false"
             android:label="To Do Tasks"
-            android:parentActivityName=".UI.ToDoLists"/>
+            android:parentActivityName=".UI.ToDoLists"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".UI.SplashActivity"
             android:exported="true">

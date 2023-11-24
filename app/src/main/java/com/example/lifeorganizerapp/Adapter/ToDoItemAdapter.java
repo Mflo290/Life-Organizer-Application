@@ -1,10 +1,13 @@
 package com.example.lifeorganizerapp.Adapter;
 
 import android.content.Context;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,26 +26,26 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
     private final LayoutInflater mInflater;
     Repository repository;
 
-    public ToDoItemAdapter(List<ToDoItem> toDoItems, Context context, LayoutInflater mInflater) {
-        this.toDoItems = toDoItems;
+    public ToDoItemAdapter(Context context, Repository repository) {
+        this.mInflater = LayoutInflater.from(context);
         this.context = context;
-        this.mInflater = mInflater;
+        this.repository = repository;
     }
 
     public Context getContext() {return context; }
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final CheckBox toDoItemView;
+        private EditText taskItemText;
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            toDoItemView = itemView.findViewById(R.id.todo_item_view);
+            taskItemText = itemView.findViewById(R.id.task_item);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    final ToDoItem currentItem = toDoItems.get(position);
+                    final ToDoItem currentTaskItem = toDoItems.get(position);
                 }
             });
 
@@ -51,16 +54,15 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
     @NonNull
     @Override
     public ToDoItemAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.todo_item_view, parent, false);
+        View itemView = mInflater.inflate(R.layout.task_item, parent, false);
         return new ItemViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ToDoItemAdapter.ItemViewHolder holder, int position) {
-        ToDoItem currentItem = toDoItems.get(position);
-        String description = currentItem.getTitle();
-
-        holder.toDoItemView.setText(description);
+        ToDoItem currentTaskItem = toDoItems.get(position);
+        String taskName = currentTaskItem.getTitle();
+        holder.taskItemText.setText(taskName);
     }
 
     @Override
@@ -74,7 +76,7 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
 
 
     public void setToDoItems(List<ToDoItem> toDoItems) {
-        toDoItems = toDoItems;
+        this.toDoItems = toDoItems;
         notifyDataSetChanged();
     }
 

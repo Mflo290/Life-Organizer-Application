@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.lifeorganizerapp.Adapter.ToDoListAdapter;
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.database.Repository;
+import com.example.lifeorganizerapp.entities.ToDoItem;
 import com.example.lifeorganizerapp.entities.ToDoList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -50,6 +51,18 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
         setContentView(R.layout.activity_to_do_lists);
 
         repository = new Repository(getApplication());
+
+//        // Inside your onCreate method or wherever you want to create the test ToDoItem
+//        ToDoItem testItem2 = new ToDoItem();
+//        testItem2.setTitle("Test Item 3"); // Set the title for the test ToDoItem
+//        testItem2.setID(3);
+//        testItem2.setChecked(false); // Set the checked property to false by default
+//        testItem2.setDateCompleted(null); // Set the LocalDate to null initially
+//        testItem2.setListID(1); // Set the listID for the test ToDoItem
+//
+//// Now you can use this testItem object as needed, for example, insert it into the repository
+//        repository.insert(testItem2);
+
 
         //Initialize RecyclerView
         Repository repository = new Repository(getApplication());

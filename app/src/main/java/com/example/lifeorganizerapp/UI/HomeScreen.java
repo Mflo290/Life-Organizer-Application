@@ -14,7 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.lifeorganizerapp.R;
-
+import com.example.lifeorganizerapp.database.Repository;
+import com.example.lifeorganizerapp.entities.ToDoItem;
 
 
 public class HomeScreen extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class HomeScreen extends AppCompatActivity {
         ImageView hamIcon;
         LinearLayout homeButton, searchButton, reportsButton, logoutButton;
         Button toDoButton, billsButton, goalsButton;
+        Repository repository;
 
 
 
@@ -33,6 +35,8 @@ public class HomeScreen extends AppCompatActivity {
         protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        repository = new Repository(getApplication());
 
 
         //Initialized menu-clickable buttons

@@ -19,6 +19,9 @@ public class ToDoItem extends Item {
         this.listID = listID;
     }
 
+    public ToDoItem() {
+
+    }
 
 
     public LocalDate getDateCompleted() {
