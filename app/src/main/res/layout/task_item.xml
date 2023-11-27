@@ -18,8 +18,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginHorizontal="25dp"
-        />
+        android:layout_marginHorizontal="25dp" />
 
 
         <EditText
@@ -35,16 +34,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+
+
         ></LinearLayout>
-
-
-
-
-
-
-
-
-
 
 
 

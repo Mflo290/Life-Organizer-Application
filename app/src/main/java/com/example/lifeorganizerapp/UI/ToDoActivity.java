@@ -80,6 +80,13 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
         heading.setText(listName);
 
 
+        repository.getAssociatedItems(toDoListID).observe(this, new Observer<List<ToDoItem>>() {
+            @Override
+            public void onChanged(List<ToDoItem> toDoItems) {
+                toDoItemAdapter.setToDoItems(toDoItems);
+            }
+        });
+
 
         //Set FAB visibility when keyboard is out
         // Get the root layout of your activity
@@ -161,14 +168,19 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
         });
 
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Repository repository = new Repository(getApplication());
-////                AddNewItem bottomFragment = new AddNewItem(repository);
-////                bottomFragment.show(getSupportFragmentManager(), AddNewItem.TAG);
-//            }
-//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Repository repository = new Repository(getApplication());
+
+                Intent intent = new Intent(ToDoActivity.this,AddNewTask.class);
+                intent.putExtra("toDoListID", toDoListID);
+
+                AddNewTask bottomFragment = new AddNewTask(repository);
+                bottomFragment.setArguments(intent.getExtras()); // Pass the intent extras as fragment arguments
+                bottomFragment.show(getSupportFragmentManager(), AddNewTask.TAG);
+            }
+        });
 
 
 

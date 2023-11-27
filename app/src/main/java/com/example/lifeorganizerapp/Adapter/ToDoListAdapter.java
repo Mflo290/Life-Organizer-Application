@@ -74,7 +74,6 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
 
     @NonNull
     @Override
-
     public ToDoListAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.list_item, parent, false);
         return new ListViewHolder(itemView);
@@ -105,9 +104,23 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
         Bundle bundle = new Bundle();
         bundle.putInt("todo_list_id", listItem.getListID());
         bundle.putString("list_name", listItem.getListName());
-        AddNewItem fragment = new AddNewItem(repository);    //Pass the repository to AddNewItem
+        AddNewItem fragment = new AddNewItem(repository);
+
+        // Pass the listener to the AddNewItem dialog
+        fragment.setOnListUpdateListener(new AddNewItem.OnListUpdateListener() {
+            @Override
+            public void onListUpdated(ToDoList updatedList) {
+                mToDoList.set(position, updatedList);
+                notifyItemChanged(position);
+                // Handle the updated list here
+                // Update the mToDoList with the new data
+                // For example:
+                // mToDoList.set(position, updatedList);
+                // notifyDataSetChanged(); // Notify adapter about the change
+            }
+        });
         fragment.setArguments(bundle);
-        fragment.show(fragment.getChildFragmentManager(), AddNewItem.TAG);      //Use getChildFragmentManager() If you're inside a Fragment. Instead of getSupportFragmentManager()
+        fragment.show(fragment.getChildFragmentManager(), AddNewItem.TAG);
     }
 
 
@@ -129,6 +142,12 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
     }
 
 
+
+    // Method to update the list data
+    public void updateList(List<ToDoList> updatedList) {
+        mToDoList = updatedList;
+        notifyDataSetChanged();
+    }
 
 
 

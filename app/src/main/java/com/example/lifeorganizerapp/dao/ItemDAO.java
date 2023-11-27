@@ -15,6 +15,7 @@ import java.util.List;
 @Dao
 public interface ItemDAO {
 
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(ToDoItem toDoItem);
 
@@ -32,5 +33,7 @@ public interface ItemDAO {
 
     @Query("SELECT * FROM To_Do_Items WHERE ID = :ID")
     LiveData<ToDoItem> getItemByID(int ID);
+
+
 
 }

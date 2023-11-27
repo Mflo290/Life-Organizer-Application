@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public abstract class Item {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int ID;
     private String title;
 

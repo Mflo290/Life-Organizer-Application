@@ -31,9 +31,10 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
     ImageView backArrow;
     FloatingActionButton fab;
 
-
     Repository repository;
     private ToDoListAdapter toDoListAdapter;
+
+
 
     @Override
     protected void onResume() {
@@ -43,6 +44,7 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
         toDoListAdapter.setToDoLists(currentLists);
         toDoListAdapter.notifyDataSetChanged();
     }
+
 
 
     @Override
@@ -78,7 +80,6 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
 //        new ItemTouchHelper(new TouchHelper(toDoListAdapter));
 //        itemTouchHelper.attachToRecyclerView(recyclerView);
 
-
         //Initialize variables
         headingTextView = findViewById(R.id.heading_textview);
         backArrow = findViewById(R.id.back_arrow);
@@ -103,11 +104,27 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
             public void onClick(View view) {
                 Repository repository = new Repository(getApplication());
                 AddNewItem bottomFragment = new AddNewItem(repository);
+                bottomFragment.setOnListUpdateListener(new AddNewItem.OnListUpdateListener() {
+                    @Override
+                    public void onListUpdated(ToDoList updatedList) {
+                        updateAdapter();
+                    }
+                });
                 bottomFragment.show(getSupportFragmentManager(), AddNewItem.TAG);
             }
         });
 
     }
+
+
+
+    // Method to update the adapter data
+    private void updateAdapter() {
+        List<ToDoList> currentLists = repository.getAllToDoLists();
+        toDoListAdapter.setToDoLists(currentLists);
+        toDoListAdapter.notifyDataSetChanged();
+    }
+
 
 
     @Override
@@ -116,6 +133,7 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
         toDoListAdapter.setToDoLists(currentLists);     //Adapter will be updated with the new list
         toDoListAdapter.notifyDataSetChanged();     //notifyDataSetChanged() will inform the RecyclerView to refresh its view.
     }
+
 
 
 }

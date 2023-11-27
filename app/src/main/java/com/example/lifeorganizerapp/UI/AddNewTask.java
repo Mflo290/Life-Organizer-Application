@@ -35,6 +35,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         setStyle(STYLE_NORMAL, R.style.DialogStyle);
     }
 
+    public AddNewTask(Repository repository) { this.repository = repository; }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +50,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Retrieve toDoListID from the intent
+        int toDoListID = getArguments().getInt("toDoListID", -1);
+
         newTaskText = getView().findViewById(R.id.item_edittext);
         newTaskSaveButton = getView().findViewById(R.id.save_button);
 
@@ -58,10 +62,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
         if (bundle != null) {
             isUpdate = true;
             String taskName = bundle.getString("task_name");
-            newTaskText.setText(taskName);
-            newTaskSaveButton.setTextColor(taskName.isEmpty()
-                    ? Color.GRAY
-                    : ContextCompat.getColor(requireContext(), R.color.purple));
+            if (taskName != null) {
+                newTaskText.setText(taskName);
+                newTaskSaveButton.setTextColor(taskName.isEmpty()
+                        ? Color.GRAY
+                        : ContextCompat.getColor(requireContext(), R.color.purple));
+            }
         }
 
         newTaskText.addTextChangedListener(new TextWatcher() {
@@ -85,29 +91,26 @@ public class AddNewTask extends BottomSheetDialogFragment {
         });
 
         final boolean finalIsUpdate = isUpdate;
-//        newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String newTaskName = newTaskText.getText().toString();
-//
-//                if (finalIsUpdate) {
-//                    int taskID = bundle.getInt("task_id");
-//                    String taskTitle = bundle.getString("task_name");
-//                    boolean checked = false;
-//                    int toDoListID =
-//                    ToDoItem updatedTask = new ToDoItem(taskID, newTaskName, checked, toDoListID);
-//                    repository.update(updatedTask);
-//                    notifyListUpdated(updatedTask);
-//
-//                } else {
-//                    ToDoItem newTask = new ToDoItem();
-//                    newTask.setTitle(newTaskName);
-//                    repository.insert(newTask);
-//                    notifyListUpdated(newTask);
-//                }
-//                dismiss(); // Close the dialog after saving
-//            }
-//        });
+        newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String newTaskName = newTaskText.getText().toString();
+
+                if (!newTaskName.isEmpty()) {
+                    ToDoItem newTask = new ToDoItem();
+                    newTask.setListID(toDoListID);
+                    newTask.setTitle(newTaskName);
+
+                    // Save the new task using your repository
+                    repository.insert(newTask);
+
+                    dismiss(); // Close the dialog after saving
+
+                } else {
+
+                }
+            }
+        });
     }
 
 

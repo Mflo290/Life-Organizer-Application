@@ -32,7 +32,7 @@ public class AddNewItem  extends BottomSheetDialogFragment {
 
 
     public interface OnListUpdateListener {
-        void onListUpdated(ToDoList updatedList);
+       void onListUpdated(ToDoList updatedList);
     }
 
     private OnListUpdateListener listener; // Listener instance variable
@@ -65,11 +65,15 @@ public class AddNewItem  extends BottomSheetDialogFragment {
     @Override
     public void onDismiss (DialogInterface dialog){
         super.onDismiss(dialog);
-        // Remove observer when the dialog is dismissed
-        LiveData<ToDoList> updatedNameLiveData = repository.getToDoListById(
-                getArguments().getInt("todo_list_id")
-        );
-        updatedNameLiveData.removeObservers(getViewLifecycleOwner());
+        Bundle arguments = getArguments();
+        if(arguments != null) {
+            int toDoListID = arguments.getInt("todo_list_id");
+            if (toDoListID != -1) {
+                // Remove observer when the dialog is dismissed
+                LiveData<ToDoList> updatedNameLiveData = repository.getToDoListById(getArguments().getInt("todo_list_id"));
+                updatedNameLiveData.removeObservers(getViewLifecycleOwner());
+            }
+        }
     }
 
 
@@ -95,10 +99,12 @@ public class AddNewItem  extends BottomSheetDialogFragment {
         if (bundle != null) {
             isUpdate = true;
             String listName = bundle.getString("list_name");
-            newItemText.setText(listName);
-            newItemSaveButton.setTextColor(listName.isEmpty()
-                    ? Color.GRAY
-                    : ContextCompat.getColor(requireContext(), R.color.purple));
+            if(listName != null) {
+                newItemText.setText(listName);
+                newItemSaveButton.setTextColor(listName.isEmpty()
+                        ? Color.GRAY
+                        : ContextCompat.getColor(requireContext(), R.color.purple));
+            }
         }
 
         newItemText.addTextChangedListener(new TextWatcher() {
@@ -128,10 +134,11 @@ public class AddNewItem  extends BottomSheetDialogFragment {
 
                 if (finalIsUpdate) {
                     int toDoListID = bundle.getInt("todo_list_id");
-                    ToDoList updatedList = new ToDoList(toDoListID, newItemName);
-                    repository.update(updatedList);
-                    notifyListUpdated(updatedList);
-
+                    if(toDoListID != -1) {
+                        ToDoList updatedList = new ToDoList(toDoListID, newItemName);
+                        repository.update(updatedList);
+                        notifyListUpdated(updatedList);
+                    }
                 } else {
                     ToDoList newList = new ToDoList();
                     newList.setListName(newItemName);

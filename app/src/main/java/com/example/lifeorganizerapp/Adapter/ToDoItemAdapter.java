@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -37,9 +38,26 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private EditText taskItemText;
+        private CheckBox checkBox;
+
+
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             taskItemText = itemView.findViewById(R.id.task_item);
+            checkBox = itemView.findViewById(R.id.checkbox);
+
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION) {
+                        final ToDoItem currentTask = toDoItems.get(position);
+                        currentTask.setChecked(isChecked);
+                        repository.update(currentTask);
+                    }
+                }
+            });
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -49,8 +67,15 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
                 }
             });
 
+
         }
+
+
     }
+
+
+
+
     @NonNull
     @Override
     public ToDoItemAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,6 +88,7 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
         ToDoItem currentTaskItem = toDoItems.get(position);
         String taskName = currentTaskItem.getTitle();
         holder.taskItemText.setText(taskName);
+        holder.checkBox.setChecked(currentTaskItem.isChecked());
     }
 
     @Override
@@ -81,10 +107,6 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
     }
 
 
-
-//    public static class ViewHolder extends RecyclerView.ViewHolder {
-//        CheckBox checkBox;
-//    }
 
 
 
