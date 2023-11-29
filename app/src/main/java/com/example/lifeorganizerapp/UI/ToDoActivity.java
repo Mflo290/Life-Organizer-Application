@@ -29,7 +29,7 @@ import java.util.List;
 public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnListUpdateListener{
 
     //Declare variables
-
+//
     int toDoListID;
     TextView heading;
     String listName;
