@@ -6,6 +6,8 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -163,15 +165,54 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
                             });
                         } else if (menuItem.getItemId() == R.id.delete_list) {
-                            repository.getToDoListById(toDoListID).observe(ToDoActivity.this, new Observer<ToDoList>() {
+                            repository.getAssociatedItems(toDoListID).observe(ToDoActivity.this, new Observer<List<ToDoItem>>() {
                                 @Override
-                                public void onChanged(ToDoList currentList) {
-                                    if(currentList != null) {
-                                        toDoListAdapter.deleteToDoList(currentList);
-                                        finish();
+                                public void onChanged(List<ToDoItem> associatedItems) {
+                                    if(associatedItems != null && !associatedItems.isEmpty()) {
+                                        // Display AlertDialog for associated items
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ToDoActivity.this);
+                                        builder.setTitle("Alert")
+                                                .setMessage("This list has associated items. Are you sure you want to delete it?")
+                                                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // Handle deletion when associated items exist
+                                                        repository.getToDoListById(toDoListID).observe(ToDoActivity.this, new Observer<ToDoList>() {
+                                                            @Override
+                                                            public void onChanged(ToDoList currentList) {
+                                                                if(currentList != null) {
+                                                                    toDoListAdapter.deleteToDoList(currentList);
+                                                                    finish(); // Finish the activity after deletion
+                                                                }
+                                                            }
+                                                        });
+
+
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // Dismiss the dialog or perform any other action upon cancellation
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                    else {
+                                        repository.getToDoListById(toDoListID).observe(ToDoActivity.this, new Observer<ToDoList>() {
+                                            @Override
+                                            public void onChanged(ToDoList currentList) {
+                                                if(currentList != null) {
+                                                    toDoListAdapter.deleteToDoList(currentList);
+                                                    finish();
+                                                }
+                                            }
+                                        });
                                     }
                                 }
                             });
+
                         }
                         return true;
                     }
