@@ -58,6 +58,20 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
                 }
             });
 
+            taskItemText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+                @Override
+                public void onFocusChange(View view, boolean hasFocus) {
+                    if(!hasFocus) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION) {
+                            ToDoItem currentTask = toDoItems.get(position);
+                            currentTask.setTitle(taskItemText.getText().toString());
+                            repository.update(currentTask);
+                        }
+                    }
+                }
+            });
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,8 +100,7 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
     @Override
     public void onBindViewHolder(@NonNull ToDoItemAdapter.ItemViewHolder holder, int position) {
         ToDoItem currentTaskItem = toDoItems.get(position);
-        String taskName = currentTaskItem.getTitle();
-        holder.taskItemText.setText(taskName);
+        holder.taskItemText.setText(currentTaskItem.getTitle());
         holder.checkBox.setChecked(currentTaskItem.isChecked());
     }
 
