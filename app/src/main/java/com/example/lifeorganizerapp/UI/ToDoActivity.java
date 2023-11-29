@@ -172,7 +172,7 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
                                         // Display AlertDialog for associated items
                                         AlertDialog.Builder builder = new AlertDialog.Builder(ToDoActivity.this);
                                         builder.setTitle("Alert")
-                                                .setMessage("This list has associated items. Are you sure you want to delete it?")
+                                                .setMessage("This list has associated tasks. Are you sure you want to delete this list?")
                                                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
@@ -186,8 +186,6 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
                                                                 }
                                                             }
                                                         });
-
-
                                                     }
                                                 })
                                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -198,17 +196,33 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
                                                     }
                                                 })
                                                 .show();
-                                    }
-                                    else {
-                                        repository.getToDoListById(toDoListID).observe(ToDoActivity.this, new Observer<ToDoList>() {
-                                            @Override
-                                            public void onChanged(ToDoList currentList) {
-                                                if(currentList != null) {
-                                                    toDoListAdapter.deleteToDoList(currentList);
-                                                    finish();
-                                                }
-                                            }
-                                        });
+                                    } else {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ToDoActivity.this);
+                                        builder.setTitle("Alert")
+                                                .setMessage("Are you sure you want to delete this list?")
+                                                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // Handle deletion when associated items exist
+                                                        repository.getToDoListById(toDoListID).observe(ToDoActivity.this, new Observer<ToDoList>() {
+                                                            @Override
+                                                            public void onChanged(ToDoList currentList) {
+                                                                if(currentList != null) {
+                                                                    toDoListAdapter.deleteToDoList(currentList);
+                                                                    finish(); // Finish the activity after deletion
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // Dismiss the dialog or perform any other action upon cancellation
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .show();
                                     }
                                 }
                             });
