@@ -44,7 +44,7 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
                     new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                    adapter.deleteToDoList(position);
+            //        adapter.deleteToDoList(position);
                  }
             });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
