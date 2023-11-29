@@ -20,6 +20,7 @@ public class Repository {
     private List<ToDoList> allToDoLists;
     private List<ToDoItem> allToDoItems;
     private static int NUMBER_OF_THREADS = 4;
+    private LiveData<ToDoList> selectedList;
     static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public Repository(Application application) {

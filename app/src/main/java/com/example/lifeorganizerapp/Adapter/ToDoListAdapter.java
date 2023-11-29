@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.example.lifeorganizerapp.UI.ToDoActivity;
 import com.example.lifeorganizerapp.database.Repository;
 import com.example.lifeorganizerapp.entities.ToDoList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListViewHolder> {
@@ -37,7 +35,6 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.repository = repository;
-        this.mToDoList = new ArrayList<>();
     }
 
 
@@ -93,13 +90,11 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ListVi
 
 
 
-    public void deleteToDoList(ToDoList toDoList) {
-        repository.delete(toDoList); // Call repository method to delete the item
-        int position = mToDoList.indexOf(toDoList);
-        if (position != -1) {
-            mToDoList.remove(position);
-            notifyItemRemoved(position);
-        }
+    public void deleteToDoList(int position) {
+        ToDoList listItem = mToDoList.get(position);
+        repository.getToDoListById(listItem.getListID());
+        mToDoList.remove(position);
+        notifyItemRemoved(position);
     }
 
 
