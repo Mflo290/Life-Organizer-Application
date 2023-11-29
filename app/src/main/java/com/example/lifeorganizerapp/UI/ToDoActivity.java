@@ -6,6 +6,8 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.lifeorganizerapp.Adapter.ToDoItemAdapter;
+import com.example.lifeorganizerapp.Adapter.ToDoListAdapter;
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.database.Repository;
 import com.example.lifeorganizerapp.entities.ToDoItem;
@@ -38,8 +41,16 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
     Repository repository;
     FloatingActionButton fab;
     private ToDoItemAdapter toDoItemAdapter;
+    private ToDoListAdapter toDoListAdapter;
 
 
+
+    private Observer<List<ToDoItem>> associatedItemsObserver = new Observer<List<ToDoItem>>() {
+        @Override
+        public void onChanged(List<ToDoItem> associatedItems) {
+            // Your onChanged implementation
+        }
+    };
 
     @Override
     public void onListUpdated(ToDoList updatedList) {
@@ -65,6 +76,8 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<ToDoItem> allTaskItems = repository.getAllToDoItems();
         toDoItemAdapter.setToDoItems(allTaskItems);
+
+        toDoListAdapter = new ToDoListAdapter(this, repository);
 
         //Find Views By ID
         heading = findViewById(R.id.heading_textview);
@@ -158,7 +171,15 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
                             });
                         } else if (menuItem.getItemId() == R.id.delete_list) {
-                            // Handle delete list
+                            repository.getToDoListById(toDoListID).observe(ToDoActivity.this, new Observer<ToDoList>() {
+                                @Override
+                                public void onChanged(ToDoList currentList) {
+                                    if (currentList != null) {
+                                        toDoListAdapter.deleteToDoList(currentList);
+                                        finish();
+                                    }
+                                }
+                            });
                         }
                         return true;
                     }
@@ -168,12 +189,13 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
         });
 
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Repository repository = new Repository(getApplication());
 
-                Intent intent = new Intent(ToDoActivity.this,AddNewTask.class);
+                Intent intent = new Intent(ToDoActivity.this, AddNewTask.class);
                 intent.putExtra("toDoListID", toDoListID);
 
                 AddNewTask bottomFragment = new AddNewTask(repository);
@@ -183,14 +205,7 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
         });
 
 
-
-
     }
-
-
-
-
-
 
 
 
