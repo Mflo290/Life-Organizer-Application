@@ -34,6 +34,7 @@ public interface ItemDAO {
     @Query("SELECT * FROM To_Do_Items WHERE ID = :ID")
     LiveData<ToDoItem> getItemByID(int ID);
 
-
+    @Query("SELECT * FROM To_Do_Items WHERE listID = :listID AND dateCompleted IS NULL")
+    List<ToDoItem> getAssociatedItemsWithNullDateCompleted(int listID);
 
 }

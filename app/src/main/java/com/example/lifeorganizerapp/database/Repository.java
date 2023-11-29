@@ -95,13 +95,18 @@ public class Repository {
     //Delete toDoList from repository
     public void delete(ToDoList toDoList) {
         databaseExecutor.execute(()->{
-            listDAO.delete(toDoList);
+            if (toDoList != null) {
+                List<ToDoItem> associatedItems = itemDAO.getAssociatedItemsWithNullDateCompleted(toDoList.getListID());
+                if(associatedItems != null && !associatedItems.isEmpty()) {
+                    // Delete associated items with NULL dateCompleted
+                    for (ToDoItem item : associatedItems) {
+                        itemDAO.delete(item);
+                    }
+                }
+                // Delete the list after deleting associated items
+                listDAO.delete(toDoList);
+            }
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
