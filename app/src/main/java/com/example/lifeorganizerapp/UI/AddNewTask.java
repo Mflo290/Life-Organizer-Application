@@ -95,11 +95,13 @@ public class AddNewTask extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 String newTaskName = newTaskText.getText().toString();
+                String listName = getArguments().getString("listName");
 
                 if (!newTaskName.isEmpty()) {
                     ToDoItem newTask = new ToDoItem();
                     newTask.setListID(toDoListID);
                     newTask.setTitle(newTaskName);
+                    newTask.setListName(listName);
 
                     // Save the new task using your repository
                     repository.insert(newTask);

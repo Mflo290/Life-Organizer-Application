@@ -243,6 +243,7 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
                 Intent intent = new Intent(ToDoActivity.this,AddNewTask.class);
                 intent.putExtra("toDoListID", toDoListID);
+                intent.putExtra("listName", listName);
 
                 AddNewTask bottomFragment = new AddNewTask(repository);
                 bottomFragment.setArguments(intent.getExtras()); // Pass the intent extras as fragment arguments

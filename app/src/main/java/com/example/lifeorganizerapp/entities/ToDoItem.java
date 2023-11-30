@@ -10,17 +10,26 @@ public class ToDoItem extends Item {
     private LocalDate dateCompleted;
     private boolean checked;
     private int listID;
+    private String listName;
 
 
 
-    public ToDoItem(int ID, String title, boolean checked, int listID) {
+    public ToDoItem(int ID, String title, boolean checked, int listID, String listName) {
         super(ID, title);
         this.checked = checked;
         this.listID = listID;
+        this.listName = listName;
+    }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
     }
 
     public ToDoItem() {
-
     }
 
 
