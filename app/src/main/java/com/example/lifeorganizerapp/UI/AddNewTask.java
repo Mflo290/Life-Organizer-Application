@@ -90,6 +90,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
             }
         });
 
+
+
         final boolean finalIsUpdate = isUpdate;
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
