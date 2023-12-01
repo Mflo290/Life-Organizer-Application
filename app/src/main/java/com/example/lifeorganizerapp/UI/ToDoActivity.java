@@ -38,7 +38,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnListUpdateListener{
 
     //Declare variables
-//
+
     int toDoListID;
     TextView heading;
     String listName;
@@ -50,6 +50,8 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
     FloatingActionButton fab;
     private ToDoItemAdapter toDoItemAdapter;
     private ToDoListAdapter toDoListAdapter;
+    ItemTouchHelper itemTouchHelper;
+
 
 
 
@@ -76,14 +78,28 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                        // Retrieve the task item to be deleted
+                        ToDoItem itemToDelete = toDoItemAdapter.getItem(position);
+
+                        // Check if itemToDelete is not null before performing deletion
+                        if (itemToDelete != null) {
+                            // Delete the task from the repository
+                            repository.delete(itemToDelete);
+
+                            // Update the UI after deletion (if needed)
+                            toDoItemAdapter.notifyItemRemoved(position);
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        // Clear the view's state to revert the swipe
+                        toDoItemAdapter.notifyItemChanged(position);
                     }
                 });
+                // Show the delete confirmation dialog
+                builder.show();
 
             } else if (direction == ItemTouchHelper.RIGHT){
                 AlertDialog.Builder builder = new AlertDialog.Builder(ToDoActivity.this);
@@ -103,8 +119,8 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
                     }
                 });
-
-
+                // Show the delete confirmation dialog
+                builder.show();
 
             }
 

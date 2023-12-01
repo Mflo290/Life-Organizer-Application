@@ -39,6 +39,14 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
 
     public Context getContext() {return context; }
 
+    public ToDoItem getItem(int position) {
+        if (toDoItems != null && position >= 0 && position < toDoItems.size()) {
+            return toDoItems.get(position);
+        } else {
+            return null;
+        }
+    }
+
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView taskItemText;
