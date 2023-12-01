@@ -64,11 +64,6 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
         List<ToDoList> allToDoLists = repository.getAllToDoLists();
         toDoListAdapter.setToDoLists(allToDoLists);
 
-//        ItemTouchHelper itemTouchHelper =
-//
-//        new ItemTouchHelper(new TouchHelper(toDoListAdapter));
-//        itemTouchHelper.attachToRecyclerView(recyclerView);
-
         //Initialize variables
         headingTextView = findViewById(R.id.heading_textview);
         backArrow = findViewById(R.id.back_arrow);
@@ -76,6 +71,7 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
 
         //Change heading text on the toolbar
         headingTextView.setText("Lists");
+
 
 
         //Click on the back arrow
@@ -103,7 +99,9 @@ public class ToDoLists extends AppCompatActivity implements DialogCloseListener 
             }
         });
 
-    }
+
+
+    } //onCreate
 
 
 

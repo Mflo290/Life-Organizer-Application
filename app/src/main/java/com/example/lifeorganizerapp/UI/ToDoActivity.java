@@ -2,6 +2,7 @@ package com.example.lifeorganizerapp.UI;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,7 +30,10 @@ import com.example.lifeorganizerapp.entities.ToDoItem;
 import com.example.lifeorganizerapp.entities.ToDoList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnListUpdateListener{
 
@@ -39,6 +44,7 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
     String listName;
     ImageView backArrow;
     ImageView editIcon;
+    LocalDate dateTaskCompleted;
 
     Repository repository;
     FloatingActionButton fab;
@@ -48,15 +54,80 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
 
     ItemTouchHelper.SimpleCallback simpleCallback= new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
+
         }
+
+
+
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getAdapterPosition();
+
+            if (direction == ItemTouchHelper.LEFT) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ToDoActivity.this);
+                builder.setTitle("Delete Task");
+                builder.setMessage("Are you sure you want to delete this Task? ");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+            } else if (direction == ItemTouchHelper.RIGHT){
+                AlertDialog.Builder builder = new AlertDialog.Builder(ToDoActivity.this);
+                builder.setTitle("Complete Task");
+                builder.setMessage("Are you sure you want to complete this Task? ");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+
+
+            }
+
 
         }
+
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(ToDoActivity.this, R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.delete_icon_24)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(ToDoActivity.this,R.color.green))
+                    .addSwipeRightActionIcon(R.drawable.check_icon_24)
+                    .create()
+                    .decorate();
+
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+
+        }
+
+
     };
 
 
