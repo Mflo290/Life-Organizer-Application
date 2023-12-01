@@ -1,8 +1,10 @@
 package com.example.lifeorganizerapp.UI;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +47,18 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
 
 
+    ItemTouchHelper.SimpleCallback simpleCallback= new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
+
 
     @Override
     public void onListUpdated(ToDoList updatedList) {
@@ -72,6 +86,9 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
         toDoItemAdapter.setToDoItems(allTaskItems);
 
         toDoListAdapter = new ToDoListAdapter(this, repository);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         //Find Views By ID
         heading = findViewById(R.id.heading_textview);
@@ -255,7 +272,6 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
 
     }
-
 
 
 

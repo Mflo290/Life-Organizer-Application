@@ -1,6 +1,7 @@
 package com.example.lifeorganizerapp.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,12 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lifeorganizerapp.R;
+import com.example.lifeorganizerapp.UI.AddNewTask;
+import com.example.lifeorganizerapp.UI.EditTaskFragment;
 import com.example.lifeorganizerapp.database.Repository;
 import com.example.lifeorganizerapp.entities.ToDoItem;
 
@@ -37,7 +41,7 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        private EditText taskItemText;
+        private TextView taskItemText;
         private CheckBox checkBox;
 
 
@@ -46,10 +50,42 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
             taskItemText = itemView.findViewById(R.id.task_item);
             checkBox = itemView.findViewById(R.id.checkbox);
 
+
+            View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if(position != RecyclerView.NO_POSITION) {
+                        ToDoItem currentTask = toDoItems.get(position);
+                        currentTask.setTitle(taskItemText.getText().toString());
+
+                        EditTaskFragment editTaskFragment = new EditTaskFragment(repository);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("toDoListID", currentTask.getListID());
+                        bundle.putString("listName", currentTask.getListName());
+                        bundle.putInt("taskID", currentTask.getID());
+                        bundle.putString("taskName", currentTask.getTitle());
+
+                        editTaskFragment.setArguments(bundle);
+
+                        // Show the fragment
+                        AppCompatActivity activity = (AppCompatActivity) context;
+                        editTaskFragment.show(activity.getSupportFragmentManager(), EditTaskFragment.TAG);
+
+
+                        repository.update(currentTask);
+                    }
+                }
+            };
+            taskItemText.setOnClickListener(clickListener);
+            itemView.setOnClickListener(clickListener);
+
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     int position = getAdapterPosition();
+
                     if(position != RecyclerView.NO_POSITION) {
                         final ToDoItem currentTask = toDoItems.get(position);
                         currentTask.setChecked(isChecked);
@@ -57,36 +93,9 @@ public class ToDoItemAdapter extends RecyclerView.Adapter<ToDoItemAdapter.ItemVi
                     }
                 }
             });
-
-            taskItemText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-                @Override
-                public void onFocusChange(View view, boolean hasFocus) {
-                    if(!hasFocus) {
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION) {
-                            ToDoItem currentTask = toDoItems.get(position);
-                            currentTask.setTitle(taskItemText.getText().toString());
-                            repository.update(currentTask);
-                        }
-                    }
-                }
-            });
-
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final ToDoItem currentTaskItem = toDoItems.get(position);
-                }
-            });
-
-
         }
 
-
     }
-
 
 
 

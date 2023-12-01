@@ -110,12 +110,11 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
                     dismiss(); // Close the dialog after saving
 
-                } else {
-
                 }
             }
         });
     }
+
 
 
 

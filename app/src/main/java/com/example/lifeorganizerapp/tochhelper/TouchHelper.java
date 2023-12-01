@@ -12,18 +12,22 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lifeorganizerapp.Adapter.ToDoItemAdapter;
 import com.example.lifeorganizerapp.Adapter.ToDoListAdapter;
 import com.example.lifeorganizerapp.R;
 
 public class TouchHelper extends ItemTouchHelper.SimpleCallback {
 
-    private ToDoListAdapter adapter;
+    private ToDoItemAdapter adapter;
 
     // This class will now support the swipe left and write functions
-    public TouchHelper(ToDoListAdapter adapter) {
+    public TouchHelper(ToDoItemAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
     }
+
+
+
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -39,7 +43,7 @@ public class TouchHelper extends ItemTouchHelper.SimpleCallback {
         if(direction == ItemTouchHelper.LEFT) {
             AlertDialog.Builder builder = new AlertDialog.Builder(adapter.getContext());
             builder.setTitle("Delete Task");
-            builder.setMessage("Are you sure you want to delete this List? ");
+            builder.setMessage("Are you sure you want to delete this Item? ");
             builder.setPositiveButton("Confirm",
                     new DialogInterface.OnClickListener() {
                     @Override
