@@ -28,13 +28,15 @@ public interface ItemDAO {
     @Query("SELECT * FROM To_Do_Items ORDER BY ID ASC")
     List<ToDoItem> getAllToDoItems();
 
-    @Query("SELECT * FROM To_Do_Items WHERE listID = :listID")
-    LiveData<List<ToDoItem>> getAssociatedItems(int listID);
+    @Query("SELECT * FROM To_Do_Items WHERE listID = :listID AND dateCompleted IS NULL")
+    LiveData<List<ToDoItem>> getAssociatedTasksWithNulDateCompleted(int listID);
+
 
     @Query("SELECT * FROM To_Do_Items WHERE ID = :ID")
     LiveData<ToDoItem> getItemByID(int ID);
 
     @Query("SELECT * FROM To_Do_Items WHERE listID = :listID AND dateCompleted IS NULL")
     List<ToDoItem> getAssociatedItemsWithNullDateCompleted(int listID);
+
 
 }

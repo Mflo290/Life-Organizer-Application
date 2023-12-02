@@ -31,6 +31,7 @@ import com.example.lifeorganizerapp.entities.ToDoList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -44,13 +45,12 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
     String listName;
     ImageView backArrow;
     ImageView editIcon;
-    LocalDate dateTaskCompleted;
 
     Repository repository;
     FloatingActionButton fab;
     private ToDoItemAdapter toDoItemAdapter;
     private ToDoListAdapter toDoListAdapter;
-    ItemTouchHelper itemTouchHelper;
+    private ArrayList<ToDoItem> completedTasksList = new ArrayList<>();
 
 
 
@@ -109,7 +109,21 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        ToDoItem completedTask = toDoItemAdapter.getItem(position);
 
+                        if (completedTask != null) {
+                            // Set the completion date as today's date
+                            completedTask.setDateCompleted(LocalDate.now());
+
+                            // Update the completion date in the repository
+                            repository.update(completedTask);
+
+                            // Add the completed task to the completedTasksList (ArrayList)
+                            completedTasksList.add(completedTask);
+
+                            toDoItemAdapter.notifyItemRemoved(position);
+
+                        }
                     }
                 });
 
@@ -191,7 +205,7 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
         heading.setText(listName);
 
 
-        repository.getAssociatedItems(toDoListID).observe(this, new Observer<List<ToDoItem>>() {
+        repository.getAssociatedTaskNullDate(toDoListID).observe(this, new Observer<List<ToDoItem>>() {
             @Override
             public void onChanged(List<ToDoItem> toDoItems) {
                 toDoItemAdapter.setToDoItems(toDoItems);
@@ -269,7 +283,7 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
                             });
                         } else if (menuItem.getItemId() == R.id.delete_list) {
-                            repository.getAssociatedItems(toDoListID).observe(ToDoActivity.this, new Observer<List<ToDoItem>>() {
+                            repository.getAssociatedTaskNullDate(toDoListID).observe(ToDoActivity.this, new Observer<List<ToDoItem>>() {
                                 @Override
                                 public void onChanged(List<ToDoItem> associatedItems) {
                                     if(associatedItems != null && !associatedItems.isEmpty()) {
