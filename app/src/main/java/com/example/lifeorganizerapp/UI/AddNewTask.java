@@ -66,7 +66,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 newTaskText.setText(taskName);
                 newTaskSaveButton.setTextColor(taskName.isEmpty()
                         ? Color.GRAY
-                        : ContextCompat.getColor(requireContext(), R.color.purple));
+                        : ContextCompat.getColor(requireContext(), R.color.dark_purple));
             }
         }
 
@@ -81,7 +81,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 newTaskSaveButton.setEnabled(!sequence.toString().isEmpty());
                 newTaskSaveButton.setTextColor(sequence.toString().isEmpty()
                         ? Color.GRAY
-                        : ContextCompat.getColor(requireContext(), R.color.purple));
+                        : ContextCompat.getColor(requireContext(), R.color.dark_purple));
 
             }
 

@@ -13,11 +13,14 @@
         android:theme="@style/Theme.LifeOrganizerApp"
         tools:targetApi="31">
         <activity
+            android:name=".UI.SearchKeywords"
+            android:exported="false" />
+        <activity
             android:name=".UI.ToDoActivity"
             android:exported="false"
             android:label="To Do Tasks"
             android:parentActivityName=".UI.ToDoLists"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".UI.SplashActivity"
             android:exported="true">

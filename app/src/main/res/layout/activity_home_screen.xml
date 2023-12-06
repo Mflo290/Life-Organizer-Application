@@ -16,42 +16,31 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/goal_reminder">
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/goal_reminder"
+            >
+
 
             <Button
                 android:id="@+id/todo_button"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
+                android:background="@drawable/square_button_background"
                 android:text="To-do"
-                android:textSize="21dp"
-                android:layout_marginTop="130dp"/>
-
-            <Button
-                android:id="@+id/bills_button"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:text="Bills"
-                android:textSize="21dp"
-                android:layout_marginTop="20dp"/>
-
-            <Button
-                android:id="@+id/goals_button"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:text="Goals"
-                android:textSize="21dp"
-                android:layout_marginTop="20dp"/>
+                android:textSize="27dp" />
 
         </LinearLayout>
+
+
+
 
         <TextView
             android:id="@+id/goal_reminder"

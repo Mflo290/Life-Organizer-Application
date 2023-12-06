@@ -103,7 +103,7 @@ public class AddNewItem  extends BottomSheetDialogFragment {
                 newItemText.setText(listName);
                 newItemSaveButton.setTextColor(listName.isEmpty()
                         ? Color.GRAY
-                        : ContextCompat.getColor(requireContext(), R.color.purple));
+                        : ContextCompat.getColor(requireContext(), R.color.dark_purple));
             }
         }
 
@@ -118,7 +118,7 @@ public class AddNewItem  extends BottomSheetDialogFragment {
                 newItemSaveButton.setEnabled(!sequence.toString().isEmpty());
                 newItemSaveButton.setTextColor(sequence.toString().isEmpty()
                         ? Color.GRAY
-                        : ContextCompat.getColor(requireContext(), R.color.purple));
+                        : ContextCompat.getColor(requireContext(), R.color.dark_purple));
 
             }
             @Override

@@ -63,7 +63,7 @@ public class EditTaskFragment extends BottomSheetDialogFragment {
                 taskEditText.setText(taskName);
                 saveButton.setTextColor(taskName.isEmpty()
                         ? Color.GRAY
-                        : ContextCompat.getColor(requireContext(), R.color.purple));
+                        : ContextCompat.getColor(requireContext(), R.color.dark_purple));
             }
         }
 
@@ -78,7 +78,7 @@ public class EditTaskFragment extends BottomSheetDialogFragment {
                 saveButton.setEnabled(!sequence.toString().isEmpty());
                 saveButton.setTextColor(sequence.toString().isEmpty()
                         ? Color.GRAY
-                        : ContextCompat.getColor(requireContext(), R.color.purple));
+                        : ContextCompat.getColor(requireContext(), R.color.dark_purple));
 
             }
 

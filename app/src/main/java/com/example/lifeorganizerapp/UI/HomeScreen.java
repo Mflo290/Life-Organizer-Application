@@ -26,7 +26,7 @@ public class HomeScreen extends AppCompatActivity {
         DrawerLayout drawerLayout;
         ImageView hamIcon;
         LinearLayout homeButton, searchButton, reportsButton, logoutButton;
-        Button toDoButton, billsButton, goalsButton;
+        Button toDoButton;
         Repository repository;
 
 
@@ -47,8 +47,7 @@ public class HomeScreen extends AppCompatActivity {
         reportsButton = findViewById(R.id.reports_button);
         logoutButton = findViewById(R.id.logout_button);
         toDoButton = findViewById(R.id.todo_button);
-        billsButton = findViewById(R.id.bills_button);
-        goalsButton = findViewById(R.id.goals_button);
+
 
 
         //Click on the logout button in the menu
@@ -68,20 +67,24 @@ public class HomeScreen extends AppCompatActivity {
                 openDrawer(drawerLayout);
             }
         });
-        //Click on the home button in the menu
+
+            //Click on the home button in the menu
             homeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                   closeDrawer(drawerLayout);
                 }
         });
+
             //Click search button in the menu
             searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(HomeScreen.this,"Search Button", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomeScreen.this, SearchKeywords.class);
+                    startActivity(intent);
                 }
             });
+
             //Click reports button in the menu
             reportsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,15 +92,16 @@ public class HomeScreen extends AppCompatActivity {
                     Toast.makeText(HomeScreen.this,"Reports Button", Toast.LENGTH_SHORT).show();
                 }
             });
+
             //Click logout button in the menu
             logoutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(HomeScreen.this,"Logout Button", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(HomeScreen.this, MainActivity.class);
                     startActivity(intent);
                 }
             });
+
 
 
         }
