@@ -11,13 +11,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeorganizerapp.Adapter.DataTableAdapter;
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.database.Repository;
+import com.example.lifeorganizerapp.entities.ToDoItem;
+
+import java.util.List;
 
 public class SearchKeywords extends AppCompatActivity {
 
@@ -29,6 +34,8 @@ public class SearchKeywords extends AppCompatActivity {
     Repository repository;
     RecyclerView recyclerView;
     DataTableAdapter dataTableAdapter;
+    EditText searchInputText;
+    List<ToDoItem> itemList;
 
 
     @Override
@@ -46,12 +53,10 @@ public class SearchKeywords extends AppCompatActivity {
         reportsButton = findViewById(R.id.reports_button);
         logoutButton = findViewById(R.id.logout_button);
         submitSearchButton = findViewById(R.id.submit_search_button);
+        searchInputText = findViewById(R.id.search_input_editText);
 
         //RecyclerView
         recyclerView = findViewById(R.id.data_table_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        dataTableAdapter = new DataTableAdapter(this);
-        recyclerView.setAdapter(dataTableAdapter);
 
 
 
@@ -98,12 +103,31 @@ public class SearchKeywords extends AppCompatActivity {
         submitSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            itemList = repository.getAllToDoItems();
 
+            setRecyclerView(itemList);
             }
         });
 
 
     } //create method
+
+    public void setRecyclerView(List<ToDoItem> itemList) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if(itemList != null && itemList.size() > 0) {
+            dataTableAdapter = new DataTableAdapter(this, itemList);
+            recyclerView.setAdapter(dataTableAdapter);
+            recyclerView.setVisibility(View.VISIBLE);
+            findViewById(R.id.no_items_text_view).setVisibility(View.GONE); // Hide TextView
+        } else {
+            recyclerView.setVisibility(View.GONE); // Hide RecyclerView
+            findViewById(R.id.no_items_text_view).setVisibility(View.VISIBLE); // Show TextView
+        }
+
+
+    }
+
 
 
     //Method to open the hamburger menu when clicked
@@ -118,15 +142,6 @@ public class SearchKeywords extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
-
-    //Method to redirect to selected menu button's activity
-    public static void redirectActivity(Activity activity, Class secondActivity) {
-        Intent intent = new Intent(activity, secondActivity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
-        activity.finish();
-    }
-
 
     @Override
     protected void onPause() {super.onPause();

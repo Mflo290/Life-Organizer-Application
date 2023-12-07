@@ -3,37 +3,57 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/task_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Test"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/outline_table"/>
+            android:background="@drawable/outline_table" />
 
         <TextView
             android:id="@+id/list_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Test 2"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/outline_table"/>
+            android:background="@drawable/outline_table" />
 
         <TextView
             android:id="@+id/completed_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Test 3"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:scrollHorizontally="true"
             android:textColor="@color/black"
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/outline_table"/>
+            android:background="@drawable/outline_table" />
     </TableRow>
+
+
 
 </TableLayout>
