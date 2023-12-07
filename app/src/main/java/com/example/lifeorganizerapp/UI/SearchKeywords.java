@@ -3,6 +3,7 @@ package com.example.lifeorganizerapp.UI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.lifeorganizerapp.Adapter.DataTableAdapter;
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.database.Repository;
 
@@ -25,6 +27,8 @@ public class SearchKeywords extends AppCompatActivity {
     LinearLayout homeButton, searchButton, reportsButton, logoutButton;
     Button submitSearchButton;
     Repository repository;
+    RecyclerView recyclerView;
+    DataTableAdapter dataTableAdapter;
 
 
     @Override
@@ -34,7 +38,7 @@ public class SearchKeywords extends AppCompatActivity {
 
         repository = new Repository(getApplication());
 
-//        //Initialized menu-clickable buttons
+//      //Initialized menu-clickable buttons
         drawerLayout = findViewById(R.id.drawer_layout);
         hamIcon = findViewById(R.id.ham_menu);
         homeButton = findViewById(R.id.home_button);
@@ -42,7 +46,13 @@ public class SearchKeywords extends AppCompatActivity {
         reportsButton = findViewById(R.id.reports_button);
         logoutButton = findViewById(R.id.logout_button);
         submitSearchButton = findViewById(R.id.submit_search_button);
-        RecyclerView recyclerView = findViewById(R.id.table_recyclerview);
+
+        //RecyclerView
+        recyclerView = findViewById(R.id.data_table_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        dataTableAdapter = new DataTableAdapter(this);
+        recyclerView.setAdapter(dataTableAdapter);
+
 
 
         //Click on the hamburger menu

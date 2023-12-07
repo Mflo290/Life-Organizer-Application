@@ -59,14 +59,66 @@
             android:textSize="18dp"
             ></Button>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/table_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/submit_search_button" />
+            <LinearLayout
+                android:id="@+id/heading_columns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/submit_search_button"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                >
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/task_heading"
+                            android:text="Task Name"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_weight="0.5"
+                            android:textStyle="bold"
+                            android:background="@drawable/outline_table"/>
+
+                        <TextView
+                            android:id="@+id/list_heading"
+                            android:text="List Name"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_weight="0.5"
+                            android:textStyle="bold"
+                            android:background="@drawable/outline_table"/>
+
+                        <TextView
+                            android:id="@+id/completed_heading"
+                            android:text="Completed"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_weight="0.5"
+                            android:textStyle="bold"
+                            android:background="@drawable/outline_table"/>
+                    </TableRow>
+                </TableLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/data_table_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/heading_columns" />
+            </LinearLayout>
+
+
+
+
 
     </LinearLayout>
 

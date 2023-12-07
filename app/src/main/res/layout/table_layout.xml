@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/taskNameTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:text="Task Name"
-        android:textStyle="bold"/>
+    <TableRow>
 
-    <TextView
-        android:id="@+id/listNameTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:text="List Name"
-        android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/task_data"
+            android:text="Test"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/outline_table"/>
 
-    <TextView
-        android:id="@+id/dateCompletedTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:text="Date Completed"
-        android:textStyle="bold"/>
-</LinearLayout>
+        <TextView
+            android:id="@+id/list_data"
+            android:text="Test 2"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/outline_table"/>
+
+        <TextView
+            android:id="@+id/completed_data"
+            android:text="Test 3"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/outline_table"/>
+    </TableRow>
+
+</TableLayout>
