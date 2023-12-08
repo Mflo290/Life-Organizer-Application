@@ -149,7 +149,8 @@
                     android:gravity="center"
                     android:text="No items found"
                     android:textSize="18sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:layout_marginVertical="20dp"/>
 
 
 

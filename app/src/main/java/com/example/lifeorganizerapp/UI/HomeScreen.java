@@ -89,7 +89,8 @@ public class HomeScreen extends AppCompatActivity {
             reportsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(HomeScreen.this,"Reports Button", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomeScreen.this, SearchReports.class);
+                    startActivity(intent);
                 }
             });
 

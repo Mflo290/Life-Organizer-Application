@@ -95,6 +95,8 @@ public class SearchKeywords extends AppCompatActivity {
         reportsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(SearchKeywords.this, SearchReports.class);
+                startActivity(intent);
             }
         });
 
