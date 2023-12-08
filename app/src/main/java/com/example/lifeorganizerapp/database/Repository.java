@@ -9,6 +9,7 @@ import com.example.lifeorganizerapp.dao.ListDAO;
 import com.example.lifeorganizerapp.entities.ToDoItem;
 import com.example.lifeorganizerapp.entities.ToDoList;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,6 +29,18 @@ public class Repository {
         itemDAO = db.itemDAO();
     }
 
+
+    public List<ToDoItem> searchTaskName(String partialName) {
+        List<ToDoItem> foundTasks = new ArrayList<>();
+        List<ToDoItem> allItems = getAllToDoItems(); // Retrieve all items from your repository
+        for(ToDoItem item : allItems) {
+            // Check if the task name contains the partial name provided
+            if (item.getTitle().toLowerCase().contains(partialName.toLowerCase())) {
+                foundTasks.add(item); // Add matching items to the foundTasks list
+            }
+        }
+        return foundTasks;
+    }
 
     public LiveData<ToDoList> getToDoListById(int toDoListID) {
         return listDAO.getToDoListById(toDoListID);

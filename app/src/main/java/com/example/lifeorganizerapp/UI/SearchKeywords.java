@@ -28,14 +28,17 @@ public class SearchKeywords extends AppCompatActivity {
 
     //Declared Navigation Widgets
     DrawerLayout drawerLayout;
+    TextView headingTextView;
     ImageView hamIcon;
     LinearLayout homeButton, searchButton, reportsButton, logoutButton;
     Button submitSearchButton;
+    Button clearDataButton;
     Repository repository;
     RecyclerView recyclerView;
     DataTableAdapter dataTableAdapter;
     EditText searchInputText;
     List<ToDoItem> itemList;
+
 
 
     @Override
@@ -53,10 +56,14 @@ public class SearchKeywords extends AppCompatActivity {
         reportsButton = findViewById(R.id.reports_button);
         logoutButton = findViewById(R.id.logout_button);
         submitSearchButton = findViewById(R.id.submit_search_button);
+        clearDataButton = findViewById(R.id.clear_button);
         searchInputText = findViewById(R.id.search_input_editText);
+        headingTextView = findViewById(R.id.heading_textview);
 
         //RecyclerView
         recyclerView = findViewById(R.id.data_table_recyclerview);
+
+        headingTextView.setText("Search Keywords");
 
 
 
@@ -103,20 +110,33 @@ public class SearchKeywords extends AppCompatActivity {
         submitSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            itemList = repository.getAllToDoItems();
+                String userInput = searchInputText.getText().toString().trim();
+                if(!userInput.isEmpty()) {
+                    itemList = repository.searchTaskName(userInput);
+                    setRecyclerView(itemList, userInput);
+                } else {
+                    recyclerView.setVisibility(View.GONE); // Hide RecyclerView
+                    findViewById(R.id.no_items_text_view).setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
-            setRecyclerView(itemList);
+        clearDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemList = null;
+                setRecyclerView(itemList, "");
             }
         });
 
 
     } //create method
 
-    public void setRecyclerView(List<ToDoItem> itemList) {
+    public void setRecyclerView(List<ToDoItem> itemList, String searchText) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if(itemList != null && itemList.size() > 0) {
-            dataTableAdapter = new DataTableAdapter(this, itemList);
+            dataTableAdapter = new DataTableAdapter(this, itemList, searchText);
             recyclerView.setAdapter(dataTableAdapter);
             recyclerView.setVisibility(View.VISIBLE);
             findViewById(R.id.no_items_text_view).setVisibility(View.GONE); // Hide TextView
