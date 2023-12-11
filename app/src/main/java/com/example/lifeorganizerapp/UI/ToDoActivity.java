@@ -21,6 +21,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lifeorganizerapp.Adapter.ToDoItemAdapter;
 import com.example.lifeorganizerapp.Adapter.ToDoListAdapter;
@@ -88,6 +89,9 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
                             // Update the UI after deletion (if needed)
                             toDoItemAdapter.notifyItemRemoved(position);
+
+                            // Show a toast message indicating successful deletion
+                            Toast.makeText(ToDoActivity.this, "Task deleted", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -123,6 +127,8 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
 
                             toDoItemAdapter.notifyItemRemoved(position);
 
+                            Toast.makeText(ToDoActivity.this, "Task completed", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
@@ -130,7 +136,8 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        // Clear the view's state to revert the swipe
+                        toDoItemAdapter.notifyItemChanged(position);
                     }
                 });
                 // Show the delete confirmation dialog
@@ -328,6 +335,8 @@ public class ToDoActivity extends AppCompatActivity implements AddNewItem.OnList
                                                                 if(currentList != null) {
                                                                     toDoListAdapter.deleteToDoList(currentList);
                                                                     finish(); // Finish the activity after deletion
+
+                                                                    Toast.makeText(ToDoActivity.this, "List deleted", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
                                                         });

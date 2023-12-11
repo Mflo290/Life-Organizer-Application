@@ -25,7 +25,7 @@ public interface ItemDAO {
     @Delete
     void delete(ToDoItem toDoItem);
 
-    @Query("SELECT * FROM To_Do_Items ORDER BY ID ASC")
+    @Query("SELECT * FROM To_Do_Items ORDER BY ID DESC")
     List<ToDoItem> getAllToDoItems();
 
     @Query("SELECT * FROM To_Do_Items WHERE listID = :listID AND dateCompleted IS NULL")
@@ -37,6 +37,13 @@ public interface ItemDAO {
 
     @Query("SELECT * FROM To_Do_Items WHERE listID = :listID AND dateCompleted IS NULL")
     List<ToDoItem> getAssociatedItemsWithNullDateCompleted(int listID);
+
+    @Query("SELECT * FROM To_Do_Items WHERE dateCompleted IS NULL ORDER BY ID DESC")
+    LiveData<List<ToDoItem>> getUncompletedTasks();
+
+    @Query("SELECT * FROM To_Do_Items WHERE dateCompleted IS NOT NULL ORDER BY dateCompleted DESC")
+    LiveData<List<ToDoItem>> getCompletedTasks();
+
 
 
 }

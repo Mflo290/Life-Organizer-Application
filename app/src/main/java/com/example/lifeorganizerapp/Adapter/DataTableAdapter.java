@@ -27,7 +27,10 @@ public class DataTableAdapter extends RecyclerView.Adapter<DataTableAdapter.View
     private String searchText; // Add this line
 
 
-
+    public DataTableAdapter(Context context, List<ToDoItem> itemList) {
+        this.context = context;
+        this.itemList = itemList;
+    }
 
     public DataTableAdapter(Context context, List<ToDoItem> itemList, String searchText) {
         this.context = context;
@@ -81,7 +84,7 @@ public class DataTableAdapter extends RecyclerView.Adapter<DataTableAdapter.View
         }
 
         public void highlightText(String text, String searchText) {
-            if (!searchText.isEmpty() && text.toLowerCase().contains(searchText.toLowerCase())) {
+            if (searchText != null && !searchText.isEmpty() && text.toLowerCase().contains(searchText.toLowerCase())) {
                 SpannableStringBuilder spannable = new SpannableStringBuilder(text);
                 Pattern pattern = Pattern.compile(searchText, Pattern.CASE_INSENSITIVE);
                 Matcher matcher = pattern.matcher(text);

@@ -41,14 +41,14 @@
 
 
             <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:checkedButton="@+id/allItemsRadioButton"
                 >
 
                 <RadioButton
-                    android:id="@+id/allItemsRadio"
+                    android:id="@+id/radioAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="All Items"
@@ -58,7 +58,7 @@
                     />
 
                 <RadioButton
-                    android:id="@+id/completedRadio"
+                    android:id="@+id/radioCompleted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Completed"
@@ -68,7 +68,7 @@
                     />
 
                 <RadioButton
-                    android:id="@+id/uncompletedRadio"
+                    android:id="@+id/radioUncompleted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Uncompleted"
@@ -165,7 +165,7 @@
         </TableLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/data_table_recyclerview"
+            android:id="@+id/data_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="10dp"

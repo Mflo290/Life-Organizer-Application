@@ -29,8 +29,17 @@ public class Repository {
         itemDAO = db.itemDAO();
     }
 
+    public LiveData<List<ToDoItem>> getCompletedToDoItems() {
+        return itemDAO.getCompletedTasks();
+    }
 
-    public List<ToDoItem> searchTaskName(String partialName) {
+    public LiveData<List<ToDoItem>> getUncompletedToDoItems() {
+        return itemDAO.getUncompletedTasks();
+    }
+
+
+
+        public List<ToDoItem> searchTaskName(String partialName) {
         List<ToDoItem> foundTasks = new ArrayList<>();
         List<ToDoItem> allItems = getAllToDoItems(); // Retrieve all items from your repository
         for(ToDoItem item : allItems) {
@@ -66,6 +75,8 @@ public class Repository {
     public LiveData<List<ToDoItem>> getAssociatedTaskNullDate(int listID) {
         return itemDAO.getAssociatedTasksWithNulDateCompleted(listID);
     }
+
+
 
     public List<ToDoItem> getAllToDoItems() {
         databaseExecutor.execute(()->{
