@@ -29,6 +29,10 @@ public class Repository {
         itemDAO = db.itemDAO();
     }
 
+    public LiveData<List<ToDoItem>> getCheckedUncompletedToDoItems() {
+        return itemDAO.getCheckedUncompletedTasks();
+    }
+
     public LiveData<List<ToDoItem>> getCompletedToDoItems() {
         return itemDAO.getCompletedTasks();
     }

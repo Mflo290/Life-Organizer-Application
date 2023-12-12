@@ -19,13 +19,17 @@
         android:layout_height="match_parent"
         >
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@+id/goal_reminder"
-            >
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/reminder_bottom_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+
+            app:layout_constraintStart_toStartOf="parent">
 
 
             <Button
@@ -35,27 +39,20 @@
                 android:layout_gravity="center"
                 android:background="@drawable/square_button_background"
                 android:text="To-do"
-                android:textSize="27dp" />
+                android:textSize="27dp" />+
+
 
         </LinearLayout>
 
 
-
-
-        <TextView
-            android:id="@+id/goal_reminder"
+        <include
+            layout="@layout/reminder_bottom_layout"
+            android:id="@+id/reminder_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#006004"
-            android:fontFamily="sans-serif"
-            android:padding="15dp"
-            android:text="GOAL REMINDER: Graduate from WGU!!!"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -63,10 +60,8 @@
 
 
 
-
-
-
 </LinearLayout>
+
 
 
         <RelativeLayout

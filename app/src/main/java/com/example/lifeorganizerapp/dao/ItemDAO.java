@@ -44,6 +44,8 @@ public interface ItemDAO {
     @Query("SELECT * FROM To_Do_Items WHERE dateCompleted IS NOT NULL ORDER BY dateCompleted DESC")
     LiveData<List<ToDoItem>> getCompletedTasks();
 
+    @Query("SELECT * FROM To_Do_Items WHERE checked = 1 AND dateCompleted IS NULL")
+    LiveData<List<ToDoItem>> getCheckedUncompletedTasks();
 
 
 }

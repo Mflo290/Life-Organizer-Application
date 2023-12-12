@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:hint="New Item"
+        android:hint="New Task"
         android:textSize="22sp"
         android:layout_marginTop="5dp"
 

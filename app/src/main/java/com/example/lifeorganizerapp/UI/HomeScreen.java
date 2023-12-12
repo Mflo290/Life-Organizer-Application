@@ -4,18 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeorganizerapp.R;
 import com.example.lifeorganizerapp.database.Repository;
 import com.example.lifeorganizerapp.entities.ToDoItem;
+
+import java.util.List;
 
 
 public class HomeScreen extends AppCompatActivity {
@@ -28,10 +33,13 @@ public class HomeScreen extends AppCompatActivity {
         LinearLayout homeButton, searchButton, reportsButton, logoutButton;
         Button toDoButton;
         Repository repository;
+        List<ToDoItem> checkedTasks;
+        int currentPosition = 0;
+        ImageView backwardArrow;
+        ImageView forwardArrow;
 
 
-
-        @Override
+    @Override
         protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
@@ -47,7 +55,8 @@ public class HomeScreen extends AppCompatActivity {
         reportsButton = findViewById(R.id.reports_button);
         logoutButton = findViewById(R.id.logout_button);
         toDoButton = findViewById(R.id.todo_button);
-
+        backwardArrow = findViewById(R.id.arrow_backward);
+        forwardArrow = findViewById(R.id.arrow_forward);
 
 
         //Click on the logout button in the menu
@@ -104,9 +113,81 @@ public class HomeScreen extends AppCompatActivity {
             });
 
 
+            repository.getCheckedUncompletedToDoItems().observe(this, new Observer<List<ToDoItem>>() {
+                @Override
+                public void onChanged(List<ToDoItem> itemList) {
+                    checkedTasks = itemList;
+                    displayToDoItems();
+                }
+            });
 
+
+            backwardArrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPreviousToDoItems();
+                }
+            });
+
+            forwardArrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showNextToDoItems();
+                }
+            });
+
+
+        }   //onCreate closing brace
+
+
+    private void showPreviousToDoItems() {
+        if (currentPosition > 0) {
+            currentPosition--;
+            displayToDoItems();
         }
+    }
 
+    private void showNextToDoItems() {
+        if (checkedTasks != null && currentPosition < checkedTasks.size() - 1) {
+            currentPosition++;
+            displayToDoItems();
+        }
+    }
+
+    private void displayToDoItems() {
+        ConstraintLayout reminderBottomLayout = findViewById(R.id.reminder_bottom_layout);
+
+        if (checkedTasks != null && !checkedTasks.isEmpty()) {
+            ToDoItem currentItem = checkedTasks.get(currentPosition);
+            TextView reminderTextView = findViewById(R.id.reminder_textView);
+            ImageView backwardArrow = findViewById(R.id.arrow_backward);
+            ImageView forwardArrow = findViewById(R.id.arrow_forward);
+
+            if (reminderTextView != null) {
+                String message = "Reminder: " + currentItem.getTitle();
+                reminderTextView.setText(message); // Update with task title or relevant data
+
+                if (checkedTasks.size() > 1) {
+                    backwardArrow.setVisibility(View.VISIBLE);
+                    forwardArrow.setVisibility(View.VISIBLE);
+
+                    if (currentPosition == 0) {
+                        backwardArrow.setVisibility(View.INVISIBLE);
+                    } else if (currentPosition == checkedTasks.size() - 1) {
+                        forwardArrow.setVisibility(View.INVISIBLE);
+                    }
+                } else {
+                    backwardArrow.setVisibility(View.INVISIBLE);
+                    forwardArrow.setVisibility(View.INVISIBLE);
+                }
+            }
+            // Set reminder_bottom_layout visible
+            reminderBottomLayout.setVisibility(View.VISIBLE);
+            } else {
+            // Hide reminder_bottom_layout if no tasks
+            reminderBottomLayout.setVisibility(View.INVISIBLE);
+        }
+    }
 
 
         //Method to open the hamburger menu when clicked
