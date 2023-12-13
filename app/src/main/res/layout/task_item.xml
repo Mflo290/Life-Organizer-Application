@@ -29,6 +29,7 @@
             android:clickable="true"
             android:inputType="text"
             android:text="MAIN"
+            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@+id/checkbox"
             app:layout_constraintTop_toTopOf="parent"

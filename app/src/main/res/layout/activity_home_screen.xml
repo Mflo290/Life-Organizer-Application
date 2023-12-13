@@ -39,6 +39,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/square_button_background"
                 android:text="To-do"
+                android:textColor="@color/white"
                 android:textSize="27dp" />+
 
 

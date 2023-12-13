@@ -8,9 +8,7 @@
     <color name="red">#AA003A</color>
 
 
-    <color name="colorPrimary">@android:color/holo_green_dark</color>
-    <color name="colorPrimaryDark">@android:color/holo_green_dark</color>
-    <color name="colorAccent">@android:color/white</color>
+    <color name="colorPrimary">#460195</color>
 
 
 </resources>
