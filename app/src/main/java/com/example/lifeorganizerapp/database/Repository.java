@@ -6,8 +6,10 @@ import androidx.lifecycle.LiveData;
 
 import com.example.lifeorganizerapp.dao.ItemDAO;
 import com.example.lifeorganizerapp.dao.ListDAO;
+import com.example.lifeorganizerapp.dao.UserDAO;
 import com.example.lifeorganizerapp.entities.ToDoItem;
 import com.example.lifeorganizerapp.entities.ToDoList;
+import com.example.lifeorganizerapp.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ public class Repository {
 
     private ListDAO listDAO;
     private ItemDAO itemDAO;
+    private UserDAO userDao;
+
     private List<ToDoList> allToDoLists;
     private List<ToDoItem> allToDoItems;
     private static int NUMBER_OF_THREADS = 4;
@@ -27,6 +31,26 @@ public class Repository {
         DatabaseBuilder db = DatabaseBuilder.getDatabase(application);
         listDAO = db.listDAO();
         itemDAO = db.itemDAO();
+        userDao = db.userDAO();
+    }
+
+    public LiveData<List<User>> getAllUsers() {
+        return userDao.getAllUsers();
+    }
+
+    public LiveData<User> getUserByUsernameAndPassword(String username, String password) {
+        return userDao.getUserByUsernameAndPassword(username, password);
+    }
+
+    public void insertUser(User user) {
+        databaseExecutor.execute(()->{
+            userDao.insert(user);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public LiveData<List<ToDoItem>> getCheckedUncompletedToDoItems() {

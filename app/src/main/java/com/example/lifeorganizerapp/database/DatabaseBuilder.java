@@ -10,14 +10,17 @@ import androidx.room.TypeConverters;
 
 import com.example.lifeorganizerapp.dao.ItemDAO;
 import com.example.lifeorganizerapp.dao.ListDAO;
+import com.example.lifeorganizerapp.dao.UserDAO;
 import com.example.lifeorganizerapp.entities.ToDoItem;
 import com.example.lifeorganizerapp.entities.ToDoList;
+import com.example.lifeorganizerapp.entities.User;
 
-@Database(entities = {ToDoList.class, ToDoItem.class}, version = 5, exportSchema = false)
+@Database(entities = {ToDoList.class, ToDoItem.class, User.class}, version = 7, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class DatabaseBuilder extends RoomDatabase {
     public abstract ListDAO listDAO();     //List Interface - CRUD
     public abstract ItemDAO itemDAO();
+    public abstract UserDAO userDAO();
 
     private static volatile DatabaseBuilder INSTANCE;     //Database Instance
 
