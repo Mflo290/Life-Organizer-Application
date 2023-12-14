@@ -168,11 +168,7 @@ public class Repository {
         databaseExecutor.execute(()->{
             itemDAO.delete(toDoItem);
         });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
 }

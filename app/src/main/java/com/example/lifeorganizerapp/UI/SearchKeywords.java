@@ -115,6 +115,9 @@ public class SearchKeywords extends AppCompatActivity {
                 String userInput = searchInputText.getText().toString().trim();
                 if(!userInput.isEmpty()) {
                     itemList = repository.searchTaskName(userInput);
+                    if (itemList != null) {
+                        setRecyclerView(itemList, userInput);
+                    }
                     setRecyclerView(itemList, userInput);
                 } else {
                     recyclerView.setVisibility(View.GONE); // Hide RecyclerView
