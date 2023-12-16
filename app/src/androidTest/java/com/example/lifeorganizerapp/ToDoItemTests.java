@@ -1,13 +1,9 @@
 package com.example.lifeorganizerapp;
 
-
 import static org.junit.Assert.assertTrue;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.espresso.remote.EspressoRemoteMessage;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.lifeorganizerapp.dao.ItemDAO;
 import com.example.lifeorganizerapp.database.DatabaseBuilder;
@@ -16,13 +12,12 @@ import com.example.lifeorganizerapp.entities.ToDoItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
-@RunWith(AndroidJUnit4.class)
 public class ToDoItemTests {
+
 
     private DatabaseBuilder itemDatabase;
     private ItemDAO itemDAO;
@@ -40,24 +35,34 @@ public class ToDoItemTests {
     }
 
 //    @Test
-//    public void testGetCompleteedTasks() throws InterruptedException {
+//    public void testGetCompletedTasks() throws InterruptedException {
 //        // Insert some test items into the database
+//        LocalDate setDate = LocalDate.now();
 //        ToDoItem testItem1 = new ToDoItem(0, "TestItem1", false, 1, "TestList");
 //        ToDoItem testItem2 = new ToDoItem(0, "TestItem2", true, 1, "TestList");
 //        ToDoItem testItem3 = new ToDoItem(0, "TestItem3", true, 2, "AnotherList");
+//        testItem1.setDateCompleted(setDate);
+//        testItem2.setDateCompleted(setDate);
+//        testItem3.setDateCompleted(setDate);
+//
 //        itemDAO.insert(testItem1);
 //        itemDAO.insert(testItem2);
 //        itemDAO.insert(testItem3);
 //
-//        // Observe the LiveData from getCompletedTasks()
-//        LiveData<List<ToDoItem>> completedTasksLiveData = itemDAO.getCompletedTasks();
-//        TestObserver<List<ToDoItem>> testObserver = new TestObserver<>();
-//        completedTasksLiveData.observeForever(testObserver);
-//
-//
+//        // Get completed items from the DAO
+//        List<ToDoItem> completedItems = itemDAO.getCompletedItems();
+//        // Check if the retrieved list contains the inserted completed items
+//        boolean found = false;
+//        for (ToDoItem item : completedItems) {
+//            if (item.isChecked()) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        assertTrue(found);
 //
 //    }
-
+//
 
 
     @Test
@@ -112,4 +117,12 @@ public class ToDoItemTests {
     public void tearDown() throws Exception {
         itemDatabase.close();
     }
+
+
+
+
 }
+
+
+
+

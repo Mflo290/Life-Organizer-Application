@@ -15,7 +15,7 @@ import com.example.lifeorganizerapp.entities.ToDoItem;
 import com.example.lifeorganizerapp.entities.ToDoList;
 import com.example.lifeorganizerapp.entities.User;
 
-@Database(entities = {ToDoList.class, ToDoItem.class, User.class}, version = 7, exportSchema = false)
+@Database(entities = {ToDoList.class, ToDoItem.class, User.class}, version = 8, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class DatabaseBuilder extends RoomDatabase {
     public abstract ListDAO listDAO();     //List Interface - CRUD
