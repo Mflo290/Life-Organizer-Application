@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.lifeorganizerapp'
+    namespace 'com.wgu.lifeorganizerapp'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.lifeorganizerapp"
+        applicationId "com.wgu.lifeorganizerapp"
         minSdk 26
         targetSdk 34
         versionCode 1
